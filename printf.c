@@ -1,11 +1,52 @@
 #include "main.h"
+#include <stdarg.h>
+#include <unistd.h>
+#include <stddef.h>
+
+int _printf(const char *format, ...);
 
 /**
- * _printf - Produces output according to a format.
+ * process_format - Processes the format string.
  * @format: The format string.
+ * @args: The va_list of arguments.
  *
- * Return: The number of characters printed (excluding null byte).
+ * Return: The number of characters processed.
  */
+int process_format(const char *format, va_list args);
+
+/**
+ * print_arg - Prints an argument based on the format specifier.
+ * @specifier: The format specifier.
+ * @args: The va_list of arguments.
+ *
+ * Return: The number of characters printed.
+ */
+int print_arg(char specifier, va_list args);
+
+/**
+ * print_char - Prints a character.
+ * @c: The character to print.
+ *
+ * Return: 1.
+ */
+int print_char(char c);
+
+/**
+ * print_string - Prints a string.
+ * @s: The string to print.
+ *
+ * Return: The number of characters printed.
+ */
+int print_string(char *s);
+
+/**
+ * _strlen - Calculates the length of a string.
+ * @s: The string to calculate the length of.
+ *
+ * Return: The length of the string.
+ */
+int _strlen(char *s);
+
 int _printf(const char *format, ...)
 {
     va_list args;
@@ -20,13 +61,6 @@ int _printf(const char *format, ...)
     return (count);
 }
 
-/**
- * process_format - Processes the format string.
- * @format: The format string.
- * @args: The va_list of arguments.
- *
- * Return: The number of characters processed.
- */
 int process_format(const char *format, va_list args)
 {
     int count = 0;
@@ -58,13 +92,6 @@ int process_format(const char *format, va_list args)
     return (count);
 }
 
-/**
- * print_arg - Prints an argument based on the format specifier.
- * @specifier: The format specifier.
- * @args: The va_list of arguments.
- *
- * Return: The number of characters printed.
- */
 int print_arg(char specifier, va_list args)
 {
     switch (specifier)
@@ -78,23 +105,11 @@ int print_arg(char specifier, va_list args)
     }
 }
 
-/**
- * print_char - Prints a character.
- * @c: The character to print.
- *
- * Return: 1.
- */
 int print_char(char c)
 {
     return (write(1, &c, 1));
 }
 
-/**
- * print_string - Prints a string.
- * @s: The string to print.
- *
- * Return: The number of characters printed.
- */
 int print_string(char *s)
 {
     if (s == NULL)
@@ -102,12 +117,6 @@ int print_string(char *s)
     return (write(1, s, _strlen(s)));
 }
 
-/**
- * _strlen - Calculates the length of a string.
- * @s: The string to calculate the length of.
- *
- * Return: The length of the string.
- */
 int _strlen(char *s)
 {
     int len = 0;
